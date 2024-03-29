@@ -1,0 +1,29 @@
+1.       
+SELECT c.FirstName, c.LastName
+FROM Customers as c
+INNER JOIN Orders as o 
+ON c.CustomerID = o.CustomerID
+WHERE TotalAmount = (SELECT MAX(TotalAmount) FROM Customers)
+
+2.
+WITH a AS
+(SELECT
+c.FirstName, c.LastName
+FROM Customers as c
+INNER JOIN Orders as o 
+ON c.CustomerID = o.CustomerID
+WHERE TotalAmount = (SELECT MAX(TotalAmount) FROM Customers) )
+
+SELECT a.OrderID, a.TotalAmount
+FROM a
+ORDER BY TotalAmount DESC
+
+
+3. 
+SELECT c.FirstName, c.LastName
+FROM Customers as c
+INNER JOIN Orders as o 
+ON c.CustomerID = o.CustomerID
+where TotalAmount > (SELECT AVG(TotalAmount) FROM Orders)
+
+

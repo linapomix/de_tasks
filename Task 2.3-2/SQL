@@ -1,0 +1,27 @@
+
+
+CREATE TABLE if not exists Readers (
+  library_card_id NOT NULL int PRIMARY KEY, 
+  reader_name  VARCHAR(45),
+  adress  VARCHAR(50),
+  phone_number int
+);
+
+CREATE TABLE if not exists Books (
+  book_id int NOT NULL  PRIMARY KEY, 
+  book_name  VARCHAR(45),
+  author  VARCHAR(45),
+  year int,
+  pages   int,
+  price   int,
+  amount   int,
+  FOREIGN KEY(pub_id) int REFERENCES Publishers(pub_id) ON DELETE CASCADE  
+);
+
+
+CREATE TABLE if not exists Publishers (
+  pub_id  int NOT NULL PRIMARY KEY, 
+  pub_name   VARCHAR(45),
+  city  VARCHAR(45)
+
+);

@@ -1,0 +1,27 @@
+
+1.
+
+#Добавляем таблицу shop_sum, объединяющую таблицы продаж магазинов 
+
+CREATE TABLE shop_sum (
+   shop_name varchar(35),
+   date date,
+   FOREIGN KEY(product_id) int REFERENCES products(product_id) ON DELETE CASCADE , 
+   sales_fact int,
+);
+
+INSERT INTO shop_sum
+VALUES (dns, (SELECT shop_dns.date FROM shop_dns), (SELECT shop_dns.product_id FROM shop_dns), (SELECT shop_dns.sales_cnt FROM shop_dns)), (mvideo, (SELECT shop_mvideo.date FROM mvideo), (SELECT shop_mvideo.product_id FROM mvideo), (SELECT shop_mvideo.sales_cnt FROM mvideo)), (sitilink, (SELECT shop_sitilink.date FROM shop_sitilink), (SELECT shop_sitilink.product_id FROM shop_sitilink), (SELECT shop_sitilink.sales_cnt FROM shop_sitilink));
+
+
+
+
+
+2. 
+
+SELECT
+shop_name,  products.product_name, sales_fact, shop_sum.date, plan.sales_cnt AS sales_plan,  (sales_fact/plan.sales_cnt)  as sales_fact/sales_plan, (products.price*sales_fact)  as income_fact  , (plan.sales_cnt*products.price) as income_plan,  (products.price*sales_fact )/(plan.sales_cnt *products.price )   as income_fact/income_plan
+FROM shop_sum AS ss
+LEFT JOIN products as p on ss.product_id = p.product_id
+LEFT JOIN plan as pl on ss.shop_name = pl.shop_name AND  on ss.date = pl.plan_date and ss.product_id = pl.product_id
+
